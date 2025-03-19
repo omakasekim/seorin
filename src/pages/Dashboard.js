@@ -1,10 +1,9 @@
-// src/pages/Dashboard.js
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { ref, onValue } from "firebase/database";
 import "../index.css";
 
-// Define the dorms that belong to the Red team
+// Define Red team dorms
 const redDorms = ["West House", "Village Girls", "Village Boys", "Dinning"];
 
 function Dashboard() {
@@ -13,25 +12,19 @@ function Dashboard() {
   const [noScore, setNoScore] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "scores"),
-      (snapshot) => {
-        if (snapshot.empty) {
-          setNoScore(true);
-          setScoreData(null);
-        } else {
-          // Assume a single document exists in "scores"
-          setScoreData(snapshot.docs[0].data());
-          setNoScore(false);
-        }
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error fetching scores:", error);
-        setLoading(false);
+    const scoresRef = ref(db, "scores");
+
+    onValue(scoresRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setScoreData(data);
+        setNoScore(false);
+      } else {
+        setNoScore(true);
+        setScoreData(null);
       }
-    );
-    return () => unsubscribe();
+      setLoading(false);
+    });
   }, []);
 
   if (loading) {
@@ -48,7 +41,7 @@ function Dashboard() {
     );
   }
 
-  // Compute team totals dynamically from houses array
+  // Compute total Red & White scores dynamically
   const houses = scoreData.houses || [];
   let redTotal = 0;
   let whiteTotal = 0;

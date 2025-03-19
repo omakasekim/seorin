@@ -9,6 +9,7 @@ import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyASgGvHJX0XYPxBQKfSPw7ORETZKOxa8tg",
   authDomain: "seorinsite.firebaseapp.com",
+  databaseURL: "https://seorinsite-default-rtdb.firebaseio.com/",
   projectId: "seorinsite",
   storageBucket: "seorinsite.firebasestorage.app",
   messagingSenderId: "688317087947",
