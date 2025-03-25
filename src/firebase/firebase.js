@@ -1,6 +1,7 @@
 // src/firebase/firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+
 import { getAuth } from "firebase/auth";
 
 
@@ -19,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Firestore
-const db = getFirestore(app);
+const db = getDatabase(app);
 
 // Firebase Auth
 const auth = getAuth(app);

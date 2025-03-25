@@ -7,7 +7,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { ref, get } from "firebase/database";
 
 const AuthContext = createContext();
 
@@ -20,10 +20,11 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
-        // Look up the user's role from Firestore ("users" collection)
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (userDoc.exists()) {
-          setRole(userDoc.data().role); // "admin" or "user"
+        // Look up the user's role from the Realtime Database ("users" node)
+        const userRef = ref(db, `users/${user.uid}`);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          setRole(snapshot.val().role); // "admin" or "user"
         } else {
           setRole("user");
         }
@@ -52,4 +53,3 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-  

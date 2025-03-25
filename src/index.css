@@ -9,6 +9,7 @@ body {
   font-family: Arial, sans-serif;
   background: #f5f5f5;
   color: #333;
+  overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* ===============================
@@ -39,6 +40,7 @@ header nav a {
   background: #fff;
   padding: 1rem;
   border-radius: 4px;
+  overflow-x: hidden;
 }
 
 /* ===============================
@@ -46,11 +48,13 @@ header nav a {
 ================================= */
 .score-boxes {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 .score-box {
   flex: 1;
+  min-width: 200px;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
@@ -76,12 +80,13 @@ header nav a {
 }
 
 /* ===============================
-   6. HOUSES CONTAINER (GRID LAYOUT)
+   6. HOUSES CONTAINER (RESPONSIVE GRID)
 ================================= */
 .houses-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
+  overflow-x: auto;
 }
 .house-item {
   display: flex;
@@ -90,6 +95,7 @@ header nav a {
   border: 1px solid #ddd;
   border-radius: 4px;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 .house-rank {
   width: 24px;
@@ -220,6 +226,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 .popup-content {
   background: #494444;
@@ -227,7 +234,8 @@ button:hover {
   border-radius: 8px;
   width: 90%;
   max-width: 600px;
-  height: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -254,6 +262,7 @@ button:hover {
 }
 .modal-buttons {
   text-align: right;
+  margin-top: 0.5rem;
 }
 .cancel-btn {
   background: #ccc;
@@ -275,6 +284,7 @@ button:hover {
 ================================= */
 .team-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
   margin-bottom: 1rem;
 }
@@ -285,10 +295,12 @@ button:hover {
 }
 .houses-edit-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 .houses-col {
   flex: 1;
+  min-width: 200px;
 }
 .house-edit-row {
   display: flex;
@@ -314,9 +326,11 @@ button:hover {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 .history-stat-box {
   flex: 1;
+  min-width: 100px;
   text-align: center;
   padding: 1rem;
   border-radius: 8px;
@@ -334,12 +348,14 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1rem;
+  overflow-x: auto;
 }
 .history-list th,
 .history-list td {
   border: 1px solid #ddd;
   padding: 0.75rem;
   text-align: center;
+  white-space: nowrap;
 }
 .history-list th {
   background: #f0f0f0;
